@@ -3,646 +3,1250 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Equioli — Cecilia Ortiz & Guillermo Litvins</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<title>Equioli — Pitch GRIDX 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-  --ink:#0f0e0c; --paper:#f7f4ef; --accent:#1a6b4a; --accent2:#c44b1e;
-  --muted:#7a7670; --rule:#ddd9d2; --card:#ffffff;
+  --bg: #080a0f;
+  --bg2: #0d1017;
+  --bg3: #131720;
+  --text: #e8eaf0;
+  --text2: #8b90a0;
+  --text3: #4a5060;
+  --accent: #4ade80;
+  --accent2: #22c55e;
+  --accent-dim: rgba(74,222,128,0.12);
+  --accent-glow: rgba(74,222,128,0.25);
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --red: #ef4444;
+  --amber: #f59e0b;
+  --blue: #60a5fa;
+  --purple: #a78bfa;
 }
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.6;}
 
-/* HERO */
-.hero{background:var(--ink);color:var(--paper);padding:48px 48px 40px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;border:1px solid rgba(247,244,239,0.07);}
-.hero-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
-.hero h1{font-family:'DM Serif Display',serif;font-size:clamp(30px,5vw,50px);font-weight:400;line-height:1.1;margin-bottom:6px;}
-.hero-role{font-size:13px;color:rgba(247,244,239,.45);margin-bottom:24px;}
-.hero-tagline{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(17px,2.5vw,22px);color:rgba(247,244,239,.85);max-width:600px;line-height:1.4;border-left:2px solid var(--accent);padding-left:18px;}
-.hero-stats{display:flex;gap:36px;margin-top:32px;flex-wrap:wrap;}
-.stat-val{font-family:'DM Serif Display',serif;font-size:30px;color:var(--paper);display:block;}
-.stat-lbl{font-size:11px;color:rgba(247,244,239,.4);letter-spacing:.05em;text-transform:uppercase;}
+html {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
 
-/* PROBLEM STRIP */
-.strip{background:#1a1917;color:var(--paper);padding:28px 48px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;}
-.strip-num{font-family:'DM Serif Display',serif;font-size:32px;color:var(--accent);display:block;line-height:1;margin-bottom:4px;}
-.strip-txt{font-size:12px;color:rgba(247,244,239,.6);line-height:1.5;}
+/* PROGRESS BAR */
+#progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--accent);
+  z-index: 1000;
+  transition: width 0.4s ease;
+  box-shadow: 0 0 8px var(--accent-glow);
+}
 
-/* MAIN */
-.main{max-width:1060px;margin:0 auto;padding:0 32px 56px;}
+/* NAV DOTS */
+#nav-dots {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
 
-/* SECTION */
-.sh{display:flex;align-items:center;gap:12px;margin:44px 0 20px;}
-.sh-num{font-size:11px;letter-spacing:.1em;color:var(--muted);}
-.sh-title{font-family:'DM Serif Display',serif;font-size:21px;font-weight:400;}
-.sh-rule{flex:1;height:.5px;background:var(--rule);}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.dot.active {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent-glow);
+  transform: scale(1.4);
+}
 
-/* TECH EXPLAINER */
-.two{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-@media(max-width:600px){.two{grid-template-columns:1fr;}}
-.block{background:var(--card);border:.5px solid var(--rule);border-radius:12px;padding:20px 22px;}
-.block h3{font-family:'DM Serif Display',serif;font-size:16px;font-weight:400;margin-bottom:8px;}
-.block p{font-size:13px;color:#4a4844;line-height:1.65;}
-.analogy{background:#f0ede8;border-radius:6px;padding:8px 12px;font-size:12px;color:var(--muted);margin-top:10px;font-style:italic;}
+/* SLIDES */
+.slide {
+  height: 100vh;
+  height: 100dvh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(32px, 5vw, 80px) clamp(24px, 6vw, 120px);
+}
 
-/* APP CARDS */
-.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
-.app{background:var(--card);border:.5px solid var(--rule);border-radius:12px;padding:20px;cursor:pointer;transition:border-color .15s,transform .15s;position:relative;overflow:hidden;}
-.app::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;}
-.app.g::before{background:var(--accent);}
-.app.o::before{background:var(--accent2);}
-.app.n::before{background:#2a4a8a;}
-.app.t::before{background:#1a7a7a;}
-.app:hover{border-color:#aaa;transform:translateY(-1px);}
-.app-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
-.app-title{font-family:'DM Serif Display',serif;font-size:17px;font-weight:400;margin-bottom:6px;line-height:1.2;}
-.app-desc{font-size:12px;color:#4a4844;line-height:1.55;margin-bottom:12px;}
-.app-mkt{background:var(--paper);border-radius:6px;padding:8px 10px;font-size:11px;}
-.app-mkt-l{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px;}
-.app-mkt-v{font-weight:500;}
-.app-detail{display:none;margin-top:12px;padding-top:12px;border-top:.5px solid var(--rule);font-size:12px;color:#5a5854;line-height:1.6;}
-.app.open .app-detail{display:block;}
-.app-toggle{font-size:11px;color:var(--muted);margin-top:8px;display:inline-block;cursor:pointer;}
+/* SLIDE COUNTER */
+.slide-num {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
 
-/* EQUIOLI SPOTLIGHT */
-.spot{background:var(--ink);color:var(--paper);border-radius:14px;padding:36px;display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start;}
-@media(max-width:640px){.spot{grid-template-columns:1fr;}}
-.spot-badge{display:inline-block;background:var(--accent);color:#fff;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:14px;}
-.spot h2{font-family:'DM Serif Display',serif;font-size:24px;font-weight:400;line-height:1.2;margin-bottom:10px;}
-.spot p{font-size:12px;color:rgba(247,244,239,.6);line-height:1.65;margin-bottom:12px;}
-.spot-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.sm{background:rgba(247,244,239,.06);border-radius:8px;padding:12px;}
-.sm-v{font-family:'DM Serif Display',serif;font-size:22px;color:var(--paper);display:block;margin-bottom:2px;}
-.sm-l{font-size:11px;color:rgba(247,244,239,.4);line-height:1.4;}
-.why{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
-.why-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:7px;flex-shrink:0;}
-.why-txt{font-size:12px;color:rgba(247,244,239,.7);line-height:1.55;}
-.why-txt strong{color:rgba(247,244,239,.9);}
-.spot-rlabel{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(247,244,239,.3);margin-bottom:16px;}
+/* FADE IN */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.25s; }
+.delay-3 { transition-delay: 0.4s; }
+.delay-4 { transition-delay: 0.55s; }
+.delay-5 { transition-delay: 0.7s; }
 
-/* MATRIX */
-.mx-wrap{display:grid;grid-template-columns:48px 1fr 1fr;grid-template-rows:auto 1fr;gap:0;}
-.mx-grid{grid-column:2/4;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;border:.5px solid var(--rule);border-radius:12px;overflow:hidden;min-height:340px;}
-.mq{padding:18px;position:relative;}
-.mq-label{font-size:10px;letter-spacing:.07em;text-transform:uppercase;font-weight:500;margin-bottom:10px;}
-.mq-card{border-radius:8px;padding:10px 12px;margin-bottom:8px;}
-.mq-name{font-size:12px;font-weight:500;margin-bottom:3px;}
-.mq-sub{font-size:11px;line-height:1.4;}
-.mq-note{font-size:11px;line-height:1.5;}
-.mq-tag{position:absolute;bottom:8px;right:10px;font-size:10px;padding:2px 7px;border-radius:8px;}
-.mx-yaxis{display:flex;align-items:center;justify-content:flex-end;padding-right:10px;grid-row:2;}
-.mx-ytext{writing-mode:vertical-rl;transform:rotate(180deg);font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
-.mx-xlabels{grid-column:2/4;display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--muted);}
+/* ============================================================
+   SLIDE 1 — HERO
+   ============================================================ */
+#slide-1 {
+  background: var(--bg);
+  text-align: center;
+}
 
-/* TABLE */
-.ct{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed;}
-.ct th{padding:9px 12px;text-align:left;font-weight:500;background:var(--ink);color:var(--paper);}
-.ct td{padding:8px 12px;border-bottom:.5px solid var(--rule);}
-.ct tr:nth-child(even) td{background:var(--paper);}
-.ct .win{color:var(--accent);font-weight:500;}
+#slide-1 canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+}
 
-/* CREDS */
-.creds{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;}
-.cred{background:var(--card);border:.5px solid var(--rule);border-radius:10px;padding:14px 16px;}
-.cred-y{font-size:11px;color:var(--muted);margin-bottom:3px;}
-.cred-t{font-size:13px;font-weight:500;line-height:1.3;}
-.cred-w{font-size:11px;color:var(--muted);margin-top:2px;}
+#slide-1 .inner {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
 
-/* REFS */
-.rf-bar{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;}
-.rf{font-size:11px;padding:4px 12px;border-radius:20px;border:.5px solid var(--rule);background:var(--card);color:var(--muted);cursor:pointer;transition:all .15s;}
-.rf.active{background:var(--ink);color:var(--paper);border-color:var(--ink);}
-.ref-item.hidden{display:none;}
-.rcard{background:var(--card);border:.5px solid var(--rule);border-radius:10px;padding:16px 18px;margin-bottom:8px;border-left:3px solid var(--rule);}
-.rcard.g{border-left-color:var(--accent);}
-.rcard.o{border-left-color:var(--accent2);}
-.rcard.n{border-left-color:#2a4a8a;}
-.rcard.t{border-left-color:#1a7a7a;}
-.rcard-top{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
-.rbadge{font-size:10px;padding:2px 8px;border-radius:10px;}
-.rcat{font-size:10px;padding:2px 8px;border-radius:10px;}
-.rproblem{font-size:12px;font-style:italic;color:var(--muted);border-left:2px solid var(--rule);padding-left:8px;margin-bottom:6px;line-height:1.5;}
-.rtitle{font-size:13px;font-weight:500;line-height:1.35;margin-bottom:4px;}
-.rauthors{font-size:11px;color:var(--muted);margin-bottom:6px;}
-.rauthors strong{color:var(--ink);}
-.rmeta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:5px;}
-.rjournal{font-size:11px;font-weight:500;}
-.ryear{font-size:11px;color:var(--muted);}
-.rdoi{font-size:11px;color:var(--accent);text-decoration:none;font-family:monospace;background:#f0f7f4;padding:1px 6px;border-radius:4px;}
-.rdoi:hover{text-decoration:underline;}
-.rnote{font-size:11px;color:var(--muted);font-style:italic;border-top:.5px solid var(--rule);padding-top:6px;margin-top:5px;}
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 32px;
+  background: var(--accent-dim);
+}
 
-/* FOOTER */
-.footer{background:var(--ink);color:rgba(247,244,239,.4);padding:20px 48px;font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;}
-.footer strong{color:rgba(247,244,239,.7);}
+.tag-pill::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  animation: pulse 2s infinite;
+}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-.hero h1,.hero-tagline,.hero-stats{animation:fadeUp .5s ease both;}
-.hero-tagline{animation-delay:.1s;}
-.hero-stats{animation-delay:.2s;}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+h1.hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(52px, 8vw, 100px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+h1.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero-sub {
+  font-size: clamp(16px, 2vw, 20px);
+  color: var(--text2);
+  font-weight: 300;
+  max-width: 520px;
+  margin: 0 auto 48px;
+  line-height: 1.6;
+}
+
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  font-size: 13px;
+  color: var(--text3);
+}
+
+.hero-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ============================================================
+   SLIDE 2 — PROBLEMA
+   ============================================================ */
+#slide-2 {
+  background: var(--bg);
+}
+
+.slide-layout {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  gap: 48px;
+}
+
+.slide-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 16px;
+}
+
+.big-statement {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(32px, 5vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+}
+
+.big-statement .accent { color: var(--accent); }
+.big-statement .muted { color: var(--text2); }
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.stat-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.stat-card:hover {
+  border-color: var(--border2);
+  box-shadow: 0 0 24px rgba(0,0,0,0.4);
+}
+
+.stat-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-value.red { color: var(--red); }
+.stat-value.amber { color: var(--amber); }
+.stat-value.green { color: var(--accent); }
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.problem-body {
+  max-width: 700px;
+}
+
+.problem-body p {
+  font-size: clamp(16px, 1.8vw, 19px);
+  color: var(--text2);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.problem-body p + p {
+  margin-top: 16px;
+}
+
+.problem-body strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ============================================================
+   SLIDE 3 — SOLUCIÓN
+   ============================================================ */
+#slide-3 {
+  background: var(--bg2);
+}
+
+.solution-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.solution-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.comparison-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.comp-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  font-size: 13px;
+}
+
+.comp-bad {
+  background: rgba(239,68,68,0.08);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #fca5a5;
+  text-align: right;
+}
+
+.comp-good {
+  background: rgba(74,222,128,0.08);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--accent);
+}
+
+.comp-arrow {
+  color: var(--text3);
+  font-size: 16px;
+}
+
+.comp-label {
+  grid-column: 1 / -1;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  text-align: center;
+  padding: 0 0 4px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
+}
+
+/* Enzyme chain visual */
+.enzyme-chain {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chain-title {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.chain-steps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chain-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.step-bubble {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
+  border: 1px solid;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.step-bubble:hover {
+  transform: scale(1.1);
+}
+
+.step-bubble.e1 { background: rgba(96,165,250,0.1); border-color: rgba(96,165,250,0.3); color: var(--blue); }
+.step-bubble.e2 { background: rgba(167,139,250,0.1); border-color: rgba(167,139,250,0.3); color: var(--purple); }
+.step-bubble.e3 { background: rgba(74,222,128,0.1); border-color: rgba(74,222,128,0.3); color: var(--accent); }
+
+.step-label { font-size: 9px; color: var(--text3); text-align: center; max-width: 60px; }
+
+.chain-arrow {
+  color: var(--text3);
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-bottom: 14px;
+}
+
+.chain-output {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--accent-dim);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+.output-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  flex-shrink: 0;
+}
+
+.output-text {
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.chain-note {
+  font-size: 12px;
+  color: var(--text3);
+  font-style: italic;
+}
+
+/* ============================================================
+   SLIDE 4 — MERCADO
+   ============================================================ */
+#slide-4 {
+  background: var(--bg);
+}
+
+.market-layout {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.market-left .big-statement {
+  font-size: clamp(28px, 4vw, 52px);
+}
+
+.revenue-models {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.rev-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: border-color 0.3s;
+  cursor: default;
+}
+.rev-item:hover { border-color: var(--border2); }
+
+.rev-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.rev-icon.b2b { background: rgba(96,165,250,0.1); }
+.rev-icon.d2c { background: rgba(167,139,250,0.1); }
+.rev-icon.lic { background: rgba(74,222,128,0.1); }
+
+.rev-text h4 { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+.rev-text p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+/* market bar */
+.market-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.market-bar-wrap {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+}
+
+.mbar-title {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 20px;
+}
+
+.mbar-item {
+  margin-bottom: 18px;
+}
+
+.mbar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 8px;
+}
+
+.mbar-track {
+  height: 6px;
+  background: var(--bg2);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.mbar-fill {
+  height: 100%;
+  border-radius: 100px;
+  background: var(--accent);
+  width: 0;
+  transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+.mbar-fill.blue { background: var(--blue); }
+.mbar-fill.amber { background: var(--amber); }
+
+.competitors-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.comp-mini {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+}
+
+.comp-mini-name { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+.comp-mini-desc { font-size: 10px; color: var(--text3); line-height: 1.4; }
+.comp-mini.us { border-color: rgba(239,68,68,0.3); }
+.comp-mini.cn { border-color: rgba(245,158,11,0.3); }
+.comp-mini.eq { border-color: rgba(74,222,128,0.5); background: rgba(74,222,128,0.05); }
+
+/* ============================================================
+   SLIDE 5 — EQUIPO
+   ============================================================ */
+#slide-5 {
+  background: var(--bg2);
+}
+
+.team-layout {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.founder-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.founder-card:hover {
+  border-color: rgba(74,222,128,0.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.founder-role {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.founder-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(22px, 3vw, 28px);
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.founder-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cred-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.cred-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text3);
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.shared-origin {
+  grid-column: 1 / -1;
+  background: var(--accent-dim);
+  border: 1px solid rgba(74,222,128,0.2);
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.origin-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.origin-text h4 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.origin-text p {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
+.intl-partners {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.partner-tag {
+  padding: 5px 12px;
+  border: 1px solid var(--border2);
+  border-radius: 100px;
+  font-size: 11px;
+  color: var(--text2);
+}
+
+/* ============================================================
+   SLIDE 6 — CIERRE / ASK
+   ============================================================ */
+#slide-6 {
+  background: var(--bg);
+  text-align: center;
+}
+
+#slide-6 canvas {
+  position: absolute;
+  inset: 0;
+  opacity: 0.35;
+}
+
+.close-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.ask-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 40px 0;
+  text-align: left;
+}
+
+.ask-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  transition: border-color 0.3s;
+}
+.ask-card:hover { border-color: rgba(74,222,128,0.35); }
+
+.ask-number {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--accent);
+  opacity: 0.4;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.ask-card h4 { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+.ask-card p { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+.cta-block {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.cta-text {
+  font-size: clamp(14px, 1.8vw, 17px);
+  color: var(--text2);
+  font-weight: 300;
+  max-width: 560px;
+  line-height: 1.6;
+}
+
+.cta-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border: 1px solid rgba(74,222,128,0.4);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--accent);
+  background: var(--accent-dim);
+  letter-spacing: 0.05em;
+}
+
+.gridx-footer {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.gridx-footer::before, .gridx-footer::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--border);
+}
 </style>
 </head>
 <body>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-label">Investor Profile · Equioli / GRIDX Transform 2026</div>
-  <h1>Equioli</h1>
-  <div class="hero-role">
-    <span style="color:rgba(247,244,239,.75);font-weight:500;">Dra. Cecilia Ortiz</span>
-    <span style="color:rgba(247,244,239,.3);margin:0 10px;">·</span>
-    <span style="color:rgba(247,244,239,.75);font-weight:500;">MSc. Guillermo Litvins</span>
-    <span style="color:rgba(247,244,239,.25);margin:0 10px;">·</span>
-    <span>ORT Uruguay · Institut Pasteur Montevideo</span>
-  </div>
-  <div class="hero-tagline">Bacterias convertidas en biorrefinerías de precisión para la salud femenina — y más allá.</div>
-  <div class="hero-stats">
-    <div><span class="stat-val">23</span><span class="stat-lbl">publicaciones científicas</span></div>
-    <div><span class="stat-val">165+</span><span class="stat-lbl">citas internacionales</span></div>
-    <div><span class="stat-val">2</span><span class="stat-lbl">co-fundadores científicos</span></div>
-    <div><span class="stat-val">$22B</span><span class="stat-lbl">mercado objetivo 2030</span></div>
-  </div>
+<div id="progress"></div>
+
+<div id="nav-dots">
+  <div class="dot active" data-slide="0" title="Intro"></div>
+  <div class="dot" data-slide="1" title="Problema"></div>
+  <div class="dot" data-slide="2" title="Solución"></div>
+  <div class="dot" data-slide="3" title="Mercado"></div>
+  <div class="dot" data-slide="4" title="Equipo"></div>
+  <div class="dot" data-slide="5" title="Ask"></div>
 </div>
 
-<!-- PROBLEM STRIP -->
-<div class="strip">
-  <div><span class="strip-num">75%</span><div class="strip-txt">de mujeres occidentales no produce S-equol naturalmente</div></div>
-  <div><span class="strip-num">1.3M</span><div class="strip-txt">muertes anuales por bacterias resistentes a antibióticos</div></div>
-  <div><span class="strip-num">$800B</span><div class="strip-txt">en costos de fabricación farmacéutica reducibles con biocatálisis</div></div>
-  <div><span class="strip-num">#1</span><div class="strip-txt">causa de ceguera en adultos mayores sin tratamientos accesibles</div></div>
-</div>
-
-<div class="main">
-
-  <!-- 01 QUÉ HACE -->
-  <div class="sh"><span class="sh-num">01</span><h2 class="sh-title">¿Qué hacen Ceci y Guillermo?</h2><div class="sh-rule"></div></div>
-  <div class="two">
-    <div class="block">
-      <h3>El problema con las enzimas</h3>
-      <p>Las enzimas son las máquinas moleculares más eficientes de la naturaleza. Fuera del cuerpo, se destruyen, no se reusan y son difíciles de escalar a nivel industrial.</p>
-      <div class="analogy">Como el mejor chef que solo puede cocinar una vez y luego se retira.</div>
+<!-- ===== SLIDE 1: HERO ===== -->
+<section class="slide" id="slide-1">
+  <canvas id="canvas-hero"></canvas>
+  <div class="inner">
+    <div class="tag-pill fade-in">GRIDX Transform 2026 &nbsp;·&nbsp; Pre-Seed</div>
+    <h1 class="hero-title fade-in delay-1">
+      La mol&eacute;cula que<br>la menopausia<br><em>necesitaba.</em>
+    </h1>
+    <p class="hero-sub fade-in delay-2">
+      Equioli produce S-equol &mdash; la alternativa natural a la terapia hormonal &mdash; mediante cascadas enzim&aacute;ticas inmovilizadas. M&aacute;s puro, m&aacute;s eficiente, escalable.
+    </p>
+    <div class="hero-meta fade-in delay-3">
+      <span>🇺🇾 Uruguay</span>
+      <span>·</span>
+      <span>Biocat&aacute;lisis enzim&aacute;tica</span>
+      <span>·</span>
+      <span>Salud femenina</span>
     </div>
-    <div class="block">
-      <h3>La solución del equipo</h3>
-      <p>Ceci y Guillermo combinan inmovilización enzimática, biología sintética e IA para diseñar bacterias que producen moléculas de alto valor — empezando por S-equol para salud femenina — con mayor pureza y menor costo que los métodos actuales.</p>
-      <div class="analogy">Bacterias reprogramadas como fábricas de precisión, no como organismos genéricos.</div>
+  </div>
+  <div class="slide-num">01 / 06</div>
+</section>
+
+<!-- ===== SLIDE 2: PROBLEMA ===== -->
+<section class="slide" id="slide-2">
+  <div class="slide-layout">
+    <div class="problem-body">
+      <div class="slide-label fade-in">El problema</div>
+      <div class="big-statement fade-in delay-1">
+        75% de las mujeres<br>occidentales <span class="muted">no producen</span><br><span class="accent">S-equol naturalmente.</span>
+      </div>
+      <p class="fade-in delay-2">
+        El S-equol es una mol&eacute;cula derivada de la soja que en estudios cl&iacute;nicos <strong>reduce los sofocos un 58%</strong> sin interferir con el sistema hormonal. Es segura, natural, y ya tiene un medicamento aprobado en Jap&oacute;n y EE.UU.
+      </p>
+      <p class="fade-in delay-3">
+        El problema: <strong>una sola empresa en el mundo</strong> la produce a escala industrial. Su proceso es costoso, lento e imposible de replicar competitivamente sin cambiar el paradigma de manufactura.
+      </p>
+    </div>
+    <div class="stat-row fade-in delay-4">
+      <div class="stat-card">
+        <div class="stat-value red">75%</div>
+        <div class="stat-label">mujeres occidentales que no producen S-equol naturalmente</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value amber">58%</div>
+        <div class="stat-label">reducci&oacute;n de sofocos en estudios cl&iacute;nicos con S-equol</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value green">1</div>
+        <div class="stat-label">productor global a escala hoy (Otsuka, Jap&oacute;n)</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">02 / 06</div>
+</section>
+
+<!-- ===== SLIDE 3: SOLUCIÓN ===== -->
+<section class="slide" id="slide-3">
+  <div class="solution-grid">
+    <div class="solution-left">
+      <div>
+        <div class="slide-label fade-in">La soluci&oacute;n</div>
+        <div class="big-statement fade-in delay-1" style="font-size: clamp(26px,3.5vw,48px);">
+          Una cadena de<br>montaje <em style="color:var(--accent)">molecular.</em>
+        </div>
+      </div>
+
+      <div class="comparison-block fade-in delay-2">
+        <div class="comp-row">
+          <div class="comp-label">Fermentaci&oacute;n tradicional (competencia)</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-bad">Mezcla de is&oacute;meros</div>
+          <div class="comp-arrow">→</div>
+          <div class="comp-good">S-equol puro</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-bad">Proceso lento, variable</div>
+          <div class="comp-arrow">→</div>
+          <div class="comp-good">Proceso controlado</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-bad">Dif&iacute;cil de escalar</div>
+          <div class="comp-arrow">→</div>
+          <div class="comp-good">Escalable por dise&ntilde;o</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-bad">Residuos biol&oacute;gicos</div>
+          <div class="comp-arrow">→</div>
+          <div class="comp-good">Proceso m&aacute;s limpio</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="enzyme-chain fade-in delay-2">
+      <div class="chain-title">C&oacute;mo funciona — Cascada enzim&aacute;tica inmovilizada</div>
+      <div class="chain-steps">
+        <div class="chain-step">
+          <div class="step-bubble e1">Daid&shy;zeína</div>
+          <div class="step-label">Mol&eacute;cula de entrada (soja)</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">
+          <div class="step-bubble e1">Enz. 1</div>
+          <div class="step-label">Fijada en soporte</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">
+          <div class="step-bubble e2">Enz. 2</div>
+          <div class="step-label">Fijada en soporte</div>
+        </div>
+        <div class="chain-arrow">→</div>
+        <div class="chain-step">
+          <div class="step-bubble e3">Enz. 3</div>
+          <div class="step-label">Fijada en soporte</div>
+        </div>
+      </div>
+      <div class="chain-output">
+        <div class="output-dot"></div>
+        <div class="output-text">S-equol puro &nbsp;·&nbsp; Consistente &nbsp;·&nbsp; Sin mezclas</div>
+      </div>
+      <div class="chain-note">Cada enzima hace su trabajo en secuencia, como una l&iacute;nea de producci&oacute;n. Nada improvisado, nada variable.</div>
+
+      <div style="margin-top:16px; padding-top:16px; border-top: 1px solid var(--border);">
+        <div class="chain-title" style="margin-bottom:10px;">Respaldo cient&iacute;fico</div>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <span class="partner-tag">Institut Pasteur Montevideo</span>
+          <span class="partner-tag">CSIC Zaragoza (ES)</span>
+          <span class="partner-tag">Univ. Warwick (UK)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">03 / 06</div>
+</section>
+
+<!-- ===== SLIDE 4: MERCADO ===== -->
+<section class="slide" id="slide-4">
+  <div class="market-layout">
+    <div class="market-left">
+      <div class="slide-label fade-in">Mercado &amp; modelo</div>
+      <div class="big-statement fade-in delay-1">
+        USD <span class="accent">17.8B</span> hoy.<br>
+        <span class="muted">USD 24.4B en 2030.</span>
+      </div>
+      <p class="fade-in delay-2" style="font-size:14px; color:var(--text2); margin-bottom:24px; line-height:1.6;">
+        Salud para la menopausia, CAGR 5.4%. S-equol puede penetrar sin prescripci&oacute;n en m&uacute;ltiples mercados.
+      </p>
+      <div class="revenue-models fade-in delay-3">
+        <div class="rev-item">
+          <div class="rev-icon b2b">🏭</div>
+          <div class="rev-text">
+            <h4>B2B — Ingrediente activo</h4>
+            <p>Venta a fabricantes de nutraceuticals y farma. Mayor volumen, contratos recurrentes.</p>
+          </div>
+        </div>
+        <div class="rev-item">
+          <div class="rev-icon d2c">💊</div>
+          <div class="rev-text">
+            <h4>D2C — Producto propio</h4>
+            <p>Suplemento directo al consumidor. Mayor margen, contacto directo con el usuario final.</p>
+          </div>
+        </div>
+        <div class="rev-item">
+          <div class="rev-icon lic">📜</div>
+          <div class="rev-text">
+            <h4>Licenciamiento tecnol&oacute;gico</h4>
+            <p>El proceso como activo licenciable a terceros que quieran producir con la tecnolog&iacute;a Equioli.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="market-right fade-in delay-2">
+      <div class="market-bar-wrap">
+        <div class="mbar-title">Panorama competitivo</div>
+        <div class="mbar-item">
+          <div class="mbar-header"><span>Otsuka / Equelle (Jap&oacute;n)</span><span style="color:var(--red)">Monopolio actual</span></div>
+          <div class="mbar-track"><div class="mbar-fill blue" data-width="90"></div></div>
+        </div>
+        <div class="mbar-item">
+          <div class="mbar-header"><span>GsynBioT (China)</span><span style="color:var(--amber)">Challenger emergente</span></div>
+          <div class="mbar-track"><div class="mbar-fill amber" data-width="35"></div></div>
+        </div>
+        <div class="mbar-item">
+          <div class="mbar-header"><span>Is&oacute;flavonas gen&eacute;ricas</span><span style="color:var(--text3)">Alternativa adjacent</span></div>
+          <div class="mbar-track"><div class="mbar-fill" style="background:var(--text3)" data-width="60"></div></div>
+        </div>
+        <div class="mbar-item">
+          <div class="mbar-header"><span style="color:var(--accent)">Equioli</span><span style="color:var(--accent)">Alternativa occidental</span></div>
+          <div class="mbar-track"><div class="mbar-fill" data-width="20"></div></div>
+        </div>
+      </div>
+
+      <div class="competitors-mini fade-in delay-3">
+        <div class="comp-mini us">
+          <div class="comp-mini-name" style="color:#fca5a5">Otsuka</div>
+          <div class="comp-mini-desc">Ferm. entera, alto costo, IP muy protegida</div>
+        </div>
+        <div class="comp-mini cn">
+          <div class="comp-mini-name" style="color:#fde68a">GsynBioT</div>
+          <div class="comp-mini-desc">Biol. sint&eacute;tica, mezcla is&oacute;meros, calidad variable</div>
+        </div>
+        <div class="comp-mini eq">
+          <div class="comp-mini-name" style="color:var(--accent)">Equioli</div>
+          <div class="comp-mini-desc">Enzimas inmovilizadas, S-equol puro, origen verificable</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">04 / 06</div>
+</section>
+
+<!-- ===== SLIDE 5: EQUIPO ===== -->
+<section class="slide" id="slide-5">
+  <div class="team-layout">
+    <div class="slide-label fade-in">El equipo</div>
+    <div class="big-statement fade-in delay-1" style="font-size:clamp(28px,4vw,50px);">
+      Una d&eacute;cada de ciencia.<br><span class="accent">Un mismo laboratorio.</span>
+    </div>
+    <div class="team-grid fade-in delay-2">
+      <div class="founder-card">
+        <div class="founder-role">Co-fundadora</div>
+        <div class="founder-name">Dra. Cecilia Ortiz</div>
+        <div class="founder-credentials">
+          <div class="cred-item"><div class="cred-dot"></div>23 publicaciones cient&iacute;ficas verificadas en biocatálisis, nanomedicina y biosensores</div>
+          <div class="cred-item"><div class="cred-dot"></div>Investigadora en ORT Uruguay &amp; colaboradora con CSIC Zaragoza y University of Warwick</div>
+          <div class="cred-item"><div class="cred-dot"></div>Doctora formada en Institut Pasteur Montevideo (dir. Marcelo Comini)</div>
+        </div>
+      </div>
+      <div class="founder-card">
+        <div class="founder-role">Co-fundador</div>
+        <div class="founder-name">MSc. Guillermo Litvins</div>
+        <div class="founder-credentials">
+          <div class="cred-item"><div class="cred-dot"></div>M&aacute;ster en nanobiosensores para detecci&oacute;n de lip&oacute;peroxidaci&oacute;n</div>
+          <div class="cred-item"><div class="cred-dot"></div>Tesis co-dirigida por Cecilia Ortiz en el mismo laboratorio del Institut Pasteur</div>
+          <div class="cred-item"><div class="cred-dot"></div>Responsable del frente tecnol&oacute;gico de detecci&oacute;n y sistemas enzim&aacute;ticos</div>
+        </div>
+      </div>
+      <div class="shared-origin">
+        <div class="origin-icon">🔬</div>
+        <div class="origin-text">
+          <h4>Origen cient&iacute;fico compartido</h4>
+          <p>Ambos se formaron en el Laboratorio de Qu&iacute;mica Biol&oacute;gica de Prot&oacute;zoeos del Institut Pasteur Montevideo, bajo la direcci&oacute;n de <strong>Marcelo Comini</strong>. No es un equipo improvisado: comparten base cient&iacute;fica, lenguaje y m&eacute;todo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="intl-partners fade-in delay-3">
+      <div class="partner-tag">🇺🇾 Institut Pasteur Montevideo</div>
+      <div class="partner-tag">🇺🇾 ORT Uruguay</div>
+      <div class="partner-tag">🇪🇸 CSIC Zaragoza</div>
+      <div class="partner-tag">🇬🇧 University of Warwick (Royal Society)</div>
+      <div class="partner-tag">🇺🇾 Lorena Betancor — ORT</div>
+    </div>
+  </div>
+  <div class="slide-num">05 / 06</div>
+</section>
+
+<!-- ===== SLIDE 6: CIERRE / ASK ===== -->
+<section class="slide" id="slide-6">
+  <canvas id="canvas-close"></canvas>
+  <div class="close-inner">
+    <div class="tag-pill fade-in">Pre-Seed &nbsp;·&nbsp; Ronda abierta</div>
+    <div class="big-statement fade-in delay-1" style="font-size:clamp(32px,5vw,64px); margin-bottom:8px;">
+      La ventana es <em style="color:var(--accent)">ahora.</em>
+    </div>
+    <p class="fade-in delay-1" style="font-size:clamp(15px,1.8vw,18px); color:var(--text2); font-weight:300; max-width:620px; margin:0 auto 8px; line-height:1.6;">
+      El monopolio de Otsuka est&aacute; siendo desafiado. Equioli tiene la oportunidad de ser la alternativa occidental &mdash; m&aacute;s limpia, m&aacute;s eficiente, con origen cient&iacute;fico verificable.
+    </p>
+
+    <div class="ask-grid fade-in delay-2">
+      <div class="ask-card">
+        <div class="ask-number">01</div>
+        <h4>Validaci&oacute;n a escala</h4>
+        <p>Completar la validaci&oacute;n del proceso enzim&aacute;tico a escala de laboratorio con par&aacute;metros reproducibles.</p>
+      </div>
+      <div class="ask-card">
+        <div class="ask-number">02</div>
+        <h4>Primeros acuerdos B2B</h4>
+        <p>Establecer contratos piloto con fabricantes de nutraceuticals interesados en S-equol como ingrediente activo.</p>
+      </div>
+      <div class="ask-card">
+        <div class="ask-number">03</div>
+        <h4>Protecci&oacute;n IP</h4>
+        <p>Registrar la propiedad intelectual sobre el proceso de producci&oacute;n mediante cascadas enzim&aacute;ticas inmovilizadas.</p>
+      </div>
+    </div>
+
+    <div class="cta-block fade-in delay-3">
+      <p class="cta-text">El equipo est&aacute; disponible para una conversaci&oacute;n t&eacute;cnica o de negocios. Buscamos socios que entiendan el valor de una plataforma tecnol&oacute;gica propia en un mercado de USD 17.8B.</p>
+      <div class="cta-badge">✉️ &nbsp; equioli@ort.edu.uy</div>
     </div>
   </div>
 
-  <!-- 02 APLICACIONES -->
-  <div class="sh"><span class="sh-num">02</span><h2 class="sh-title">Cuatro problemas que su ciencia podría encarar</h2><div class="sh-rule"></div></div>
-  <div class="apps">
-
-    <div class="app g" onclick="toggleApp(this)">
-      <div class="app-tag">Salud femenina · Equioli</div>
-      <div class="app-title">Producción industrial de S-equol</div>
-      <div class="app-desc">El 75% de mujeres occidentales no puede producir el compuesto que alivia la menopausia. No existe forma económica de fabricarlo a escala.</div>
-      <div class="app-mkt"><div class="app-mkt-l">Mercado global</div><div class="app-mkt-v">$22B — salud en menopausia (2030)</div></div>
-      <div class="app-detail">Usa enzimas inmovilizadas en cascada para fabricar S-equol en fermentadores industriales — igual que se fabrica insulina. Sin hormonas, con 20+ años de evidencia clínica.<br><br><strong>Por qué Ceci:</strong> su expertise en inmovilización enzimática es exactamente lo que hace el proceso estable, puro y escalable.</div>
-      <span class="app-toggle">+ ver detalle</span>
-    </div>
-
-    <div class="app o" onclick="toggleApp(this)">
-      <div class="app-tag">Oncología · ACS Nano 2023</div>
-      <div class="app-title">Terapia de cáncer sin quimio sistémica</div>
-      <div class="app-desc">La quimio destruye células sanas junto con el tumor. Su equipo desarrolló un sistema que activa el tratamiento solo donde está el cáncer.</div>
-      <div class="app-mkt"><div class="app-mkt-l">Mercado global</div><div class="app-mkt-v">$250B — oncología (2028)</div></div>
-      <div class="app-detail">Nanopartícula (~150nm) con enzima + imán. La enzima convierte un profármaco inofensivo en veneno para el tumor. El médico activa el sistema con campo magnético externo — sin tocar tejido sano.<br><br><strong>Estado:</strong> validado in vitro en líneas de cáncer. Publicado en ACS Nano 2023 (DOI: 10.1021/acsnano.3c01599).</div>
-      <span class="app-toggle">+ ver detalle</span>
-    </div>
-
-    <div class="app n" onclick="toggleApp(this)">
-      <div class="app-tag">Antibióticos · Royal Society + Warwick</div>
-      <div class="app-title">Síntesis de antibióticos de última línea</div>
-      <div class="app-desc">Los antibióticos más complejos — los que se usan cuando todo lo demás falla — son tan difíciles de fabricar que escasean globalmente.</div>
-      <div class="app-mkt"><div class="app-mkt-l">Mercado global</div><div class="app-mkt-v">$45B — antibióticos (2030)</div></div>
-      <div class="app-detail">Inmoviliza glicosiltransferasas para fabricar antibióticos glucopeptídicos (como vancomicina) de forma eficiente y escalable.<br><br>Proyecto activo financiado por la Royal Society con University of Warwick, UK.</div>
-      <span class="app-toggle">+ ver detalle</span>
-    </div>
-
-    <div class="app t" onclick="toggleApp(this)">
-      <div class="app-tag">Diagnóstico · Chagas / Leishmaniasis</div>
-      <div class="app-title">Biosensores para enfermedades parasitarias</div>
-      <div class="app-desc">El Chagas afecta 6–7M de personas en Latam. La mayoría no lo sabe porque los tests actuales son caros y lentos.</div>
-      <div class="app-mkt"><div class="app-mkt-l">Mercado global</div><div class="app-mkt-v">$8B — diagnóstico tropical</div></div>
-      <div class="app-detail">13 años estudiando la enzima clave del parásito del Chagas (G6PDH) permiten diseñar biosensores de detección rápida, barata y sin laboratorio especializado.<br><br>Publicaciones en J. Mol. Biology 2019 y Molecules 2016 y 2021.</div>
-      <span class="app-toggle">+ ver detalle</span>
-    </div>
-
-  </div>
-
-  <!-- 03 EQUIOLI -->
-  <div class="sh"><span class="sh-num">03</span><h2 class="sh-title">La apuesta hoy: Equioli en GRIDX</h2><div class="sh-rule"></div></div>
-  <div class="spot">
-    <div>
-      <span class="spot-badge">Startup activa · GRIDX Transform 2026</span>
-      <h2>Del laboratorio al suplemento que el 75% no puede producir sola</h2>
-      <p>Equioli lleva la ciencia de Ceci al mercado: S-equol por fermentación enzimática, a menor costo y mayor pureza que los métodos actuales.</p>
-      <div class="spot-grid">
-        <div class="sm"><span class="sm-v">75%</span><span class="sm-l">mujeres sin capacidad natural de producirlo</span></div>
-        <div class="sm"><span class="sm-v">20+</span><span class="sm-l">años de estudios clínicos que lo avalan</span></div>
-        <div class="sm"><span class="sm-v">$22B</span><span class="sm-l">mercado proyectado 2030</span></div>
-        <div class="sm"><span class="sm-v">200K+</span><span class="sm-l">usuarias del producto existente en EE.UU.</span></div>
-      </div>
-    </div>
-    <div>
-      <div class="spot-rlabel">Por qué Ceci es la científica correcta</div>
-      <div class="why"><div class="why-dot"></div><div class="why-txt"><strong>Especialidad exacta:</strong> inmovilización enzimática durante 10+ años — la tecnología central de Equioli.</div></div>
-      <div class="why"><div class="why-dot"></div><div class="why-txt"><strong>Track record:</strong> demostró 280× más estabilidad enzimática en ACS Nano 2023.</div></div>
-      <div class="why"><div class="why-dot"></div><div class="why-txt"><strong>Ya mapeó el campo:</strong> publicó revisión sobre producción de S-equol en 2024 (DOI: 10.1016/j.rechem.2023.101288).</div></div>
-      <div class="why"><div class="why-dot"></div><div class="why-txt"><strong>GRIDX:</strong> inversión semilla hasta $200K + co-fundador de negocio + red de inversores internacionales.</div></div>
-      <div class="why"><div class="why-dot"></div><div class="why-txt"><strong>Timing:</strong> mercado de menopausia en explosión demográfica — los baby boomers llegan ahora.</div></div>
-    </div>
-  </div>
-
-  <!-- TEAM EQUIOLI -->
-  <div class="sh"><span class="sh-num">04</span><h2 class="sh-title">El equipo fundador — Equioli</h2><div class="sh-rule"></div></div>
-
-  <div class="two" style="margin-bottom:8px;">
-
-    <div class="block" style="border-left:3px solid var(--accent);">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
-        <div style="width:44px;height:44px;border-radius:50%;background:#e8f5ee;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:#1a6b4a;flex-shrink:0;">CO</div>
-        <div>
-          <div style="font-size:15px;font-weight:500;color:var(--ink);">Dra. Cecilia Ortiz</div>
-          <div style="font-size:12px;color:var(--muted);">Co-fundadora científica</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:#4a4844;line-height:1.65;margin-bottom:10px;">Doctora en Ciencias Biológicas, 13 años de investigación en enzimas inmovilizadas. Especialista en la tecnología core de Equioli. 23 publicaciones, 165+ citas. Catedrática Asociada ORT Uruguay.</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;">
-        <span style="font-size:10px;background:#e8f5ee;color:#1a6b4a;padding:2px 8px;border-radius:10px;">Enzimas inmovilizadas</span>
-        <span style="font-size:10px;background:#e8f5ee;color:#1a6b4a;padding:2px 8px;border-radius:10px;">Nanomateriales</span>
-        <span style="font-size:10px;background:#e8f5ee;color:#1a6b4a;padding:2px 8px;border-radius:10px;">Biosensores</span>
-        <span style="font-size:10px;background:#e8f5ee;color:#1a6b4a;padding:2px 8px;border-radius:10px;">Biocatálisis industrial</span>
-      </div>
-    </div>
-
-    <div class="block" style="border-left:3px solid #7F77DD;">
-      <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px;">
-        <div style="width:44px;height:44px;border-radius:50%;background:#EEEDFE;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:500;color:#534AB7;flex-shrink:0;">GL</div>
-        <div>
-          <div style="font-size:15px;font-weight:500;color:var(--ink);">MSc. Guillermo Litvins</div>
-          <div style="font-size:12px;color:var(--muted);">Co-fundador científico</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:#4a4844;line-height:1.65;margin-bottom:10px;">Maestría en Biotecnología (UdelaR). Tesis sobre <em>nanobiosensores para detección de lipoperóxidos</em> — desarrollada en el Lab. de Biología Redox del Institut Pasteur Montevideo bajo tutoría de Marcelo Comini y co-tutoría de Cecilia Ortiz. Becado por ANII. Ingeniería en Biotecnología, ORT Uruguay.</div>
-      <div style="font-size:11px;color:var(--muted);background:#f0ede8;border-radius:6px;padding:7px 10px;line-height:1.5;margin-bottom:10px;">
-        Tesis de maestría: <em>"Desarrollo de un nanobiosensor para la detección de lipoperóxidos"</em> — Lab. Biología Redox de Tripanosomátidos, IP Montevideo + Lab. Biotecnología, ORT Uruguay.
-      </div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;">
-        <span style="font-size:10px;background:#EEEDFE;color:#534AB7;padding:2px 8px;border-radius:10px;">Biosensores proteicos</span>
-        <span style="font-size:10px;background:#EEEDFE;color:#534AB7;padding:2px 8px;border-radius:10px;">Biología sintética</span>
-        <span style="font-size:10px;background:#EEEDFE;color:#534AB7;padding:2px 8px;border-radius:10px;">Nanopartículas de sílice</span>
-        <span style="font-size:10px;background:#EEEDFE;color:#534AB7;padding:2px 8px;border-radius:10px;">Expresión en E. coli</span>
-      </div>
-    </div>
-
-  </div>
-
-  <div style="padding:11px 15px;background:#EEEDFE;border-radius:8px;font-size:12px;color:#3C3489;line-height:1.6;border-left:3px solid #7F77DD;margin-bottom:4px;">
-    <strong>Conexión entre Ceci y Guillermo:</strong> Ceci fue co-tutora de la tesis de maestría de Guillermo en el Institut Pasteur Montevideo. Comparten tutor (Marcelo Comini), laboratorio de origen y stack tecnológico. No son co-fundadores casuales — construyeron su base científica juntos. La tesis de Guillermo aborda inmovilización de enzimas en nanopartículas de sílice para biosensores — exactamente la tecnología que Equioli aplica a producción de S-equol.
-  </div>
-  <div style="font-size:11px;color:var(--muted);padding:4px 2px;">Fuente: imagen de defensa de tesis pública · Repositorio ORT (rad.ort.edu.uy) · Email institucional fi365.ort.edu.uy</div>
-
-  <!-- 05 CREDS -->
-  <div class="sh"><span class="sh-num">05</span><h2 class="sh-title">Historial académico de Ceci y Guillermo</h2><div class="sh-rule"></div></div>
-  <div class="creds">
-    <div class="cred"><div class="cred-y">2017</div><div class="cred-t">Doctorado en Ciencias Biológicas</div><div class="cred-w">PEDECIBA · UdelaR, Uruguay</div></div>
-    <div class="cred"><div class="cred-y">2017–2019</div><div class="cred-t">Postdoctorado</div><div class="cred-w">Institut Pasteur + Manchester Cancer Research Centre, UK</div></div>
-    <div class="cred"><div class="cred-y">2021–pres.</div><div class="cred-t">Proyecto Royal Society</div><div class="cred-w">ORT Uruguay + University of Warwick, UK</div></div>
-    <div class="cred"><div class="cred-y">2023</div><div class="cred-t">Publicación en ACS Nano</div><div class="cred-w">Top 5 revistas de nanociencia mundial</div></div>
-    <div class="cred"><div class="cred-y">activo</div><div class="cred-t">Catedrática Asociada SNI</div><div class="cred-w">Facultad de Ingeniería, ORT Uruguay</div></div>
-    <div class="cred"><div class="cred-y">activo</div><div class="cred-t">Colaboración CSIC España</div><div class="cred-w">Instituto de Nanociencia de Aragón, Zaragoza</div></div>
-  </div>
-
-  <!-- 06 MATRIZ -->
-  <div class="sh"><span class="sh-num">06</span><h2 class="sh-title">Posicionamiento competitivo</h2><div class="sh-rule"></div></div>
-
-  <div class="mx-wrap" style="margin-bottom:20px;">
-    <div></div>
-    <div style="text-align:center;font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;padding-bottom:8px;grid-column:2/4;">Pureza del producto / Controlabilidad →</div>
-    <div class="mx-yaxis"><div class="mx-ytext">Escalabilidad industrial →</div></div>
-    <div class="mx-grid">
-
-      <!-- Q1 verde: alto-alto → Equioli -->
-      <div class="mq" style="border-right:.5px solid var(--rule);border-bottom:.5px solid var(--rule);background:#f3fbf7;">
-        <div class="mq-label" style="color:#0F6E56;">Alta pureza · Alta escalabilidad</div>
-        <div class="mq-card" style="background:#1a6b4a;border:2px solid #1a6b4a;">
-          <div class="mq-name" style="color:#fff;">Equioli</div>
-          <div class="mq-sub" style="color:rgba(255,255,255,.8);">Enzimas inmovilizadas en cascada · sin organismo vivo · producto puro · reutilizable</div>
-        </div>
-        <div class="mq-note" style="font-size:11px;color:#0F6E56;">280× más estabilidad enzimática demostrada. Proceso aeróbico, modular, sin contaminación biológica.</div>
-        <div class="mq-tag" style="background:#e8f5ee;color:#1a6b4a;">Zona objetivo</div>
-      </div>
-
-      <!-- Q2 ámbar: pureza media-alta escalabilidad → GsynBioT -->
-      <div class="mq" style="border-bottom:.5px solid var(--rule);background:#fffdf5;">
-        <div class="mq-label" style="color:#854F0B;">Pureza media · Alta escalabilidad</div>
-        <div class="mq-card" style="background:#fff;border:1.5px solid #EF9F27;">
-          <div class="mq-name" style="color:#633806;">GsynBioT (China)</div>
-          <div class="mq-sub" style="color:#854F0B;">Biología sintética · E. coli modificado · célula entera viva</div>
-        </div>
-        <div class="mq-note" style="font-size:11px;color:#854F0B;">Inhibición por producto acumulado. Purificación compleja. Certificación nutraceutical más difícil.</div>
-      </div>
-
-      <!-- Q3 azul: alta pureza-baja escalabilidad → Otsuka -->
-      <div class="mq" style="border-right:.5px solid var(--rule);background:#f5f7fb;">
-        <div class="mq-label" style="color:#2a4a8a;">Alta pureza · Baja escalabilidad</div>
-        <div class="mq-card" style="background:#fff;border:1.5px solid #85B7EB;">
-          <div class="mq-name" style="color:#0C447C;">Otsuka / Equelle (Japón–EE.UU.)</div>
-          <div class="mq-sub" style="color:#185FA5;">Bacteria natural patentada · monopolio · ciclos largos · costo alto</div>
-        </div>
-        <div class="mq-note" style="font-size:11px;color:#185FA5;">Un solo proveedor global. Precio elevado frena el mercado masivo.</div>
-      </div>
-
-      <!-- Q4 gris: bajo-bajo → genéricas -->
-      <div class="mq" style="background:#fafaf8;">
-        <div class="mq-label" style="color:var(--muted);">Pureza baja · Baja escalabilidad</div>
-        <div class="mq-card" style="background:#fff;border:1.5px solid var(--rule);">
-          <div class="mq-name" style="color:#444;">Isoflavonas genéricas</div>
-          <div class="mq-sub" style="color:var(--muted);">Sin conversión garantizada · funciona solo en 25% productoras naturales</div>
-        </div>
-        <div class="mq-note" style="font-size:11px;color:var(--muted);">Compiten por precio. No producen S-equol puro. Categoría diferente.</div>
-      </div>
-
-    </div>
-    <div></div>
-    <div class="mx-xlabels"><span>← Baja pureza</span><span>Alta pureza →</span></div>
-  </div>
-
-  <!-- tabla comparativa -->
-  <div style="overflow-x:auto;margin-bottom:8px;">
-    <table class="ct">
-      <thead>
-        <tr>
-          <th style="width:22%">Dimensión</th>
-          <th style="width:26%">Otsuka / Equelle (Japón–EE.UU.)</th>
-          <th style="width:26%">GsynBioT (China)</th>
-          <th style="width:26%;color:#9FE1CB;">Equioli</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td>Tecnología</td><td>Bacteria viva natural</td><td>Célula viva modificada</td><td class="win">Enzimas inmovilizadas</td></tr>
-        <tr><td>Pureza</td><td>Media (bacteria inactivada)</td><td>Variable</td><td class="win">Alta · certificable</td></tr>
-        <tr><td>Reutilización</td><td>No</td><td>Parcial</td><td class="win">Cientos de ciclos</td></tr>
-        <tr><td>Inhibición por producto</td><td>Sí</td><td>Sí (documentado)</td><td class="win">Controlable</td></tr>
-        <tr><td>Costo a escala</td><td>Alto · monopolio</td><td>Medio</td><td class="win">Bajo</td></tr>
-        <tr><td>Condiciones</td><td>Anaeróbico · costoso</td><td>Anaeróbico</td><td class="win">Aeróbico · estándar</td></tr>
-        <tr><td>IP</td><td>Patente Otsuka 2016</td><td>Proceso propio</td><td class="win">Enfoque diferente · patentable</td></tr>
-        <tr><td>Evidencia peer-reviewed</td><td>Clínica (producto final)</td><td>No publicada</td><td class="win">Técnica + revisión 2024</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div style="padding:11px 15px;background:#f3fbf7;border-radius:8px;font-size:12px;color:#0F6E56;line-height:1.6;border-left:3px solid var(--accent);">
-    <strong>En una línea:</strong> Otsuka (Japón) tiene el mercado pero proceso ineficiente. GsynBioT (China) tiene el enfoque moderno pero producto impuro. Ceci resuelve los dos al mismo tiempo.
-  </div>
-
-  <!-- 06 RIESGO -->
-  <div class="sh"><span class="sh-num">07</span><h2 class="sh-title">Horizonte y riesgo</h2><div class="sh-rule"></div></div>
-  <div class="two">
-    <div class="block">
-      <h3>Lo que ya está validado</h3>
-      <p>El S-equol tiene 20+ años de ensayos clínicos. La tecnología de inmovilización de Ceci está publicada en revistas de primer nivel. La demanda del mercado existe — Equelle (Japón) ya tiene 200K usuarias.</p>
-    </div>
-    <div class="block">
-      <h3>El riesgo y el horizonte</h3>
-      <p>El riesgo es el escalado industrial: llevar el proceso de laboratorio a fermentador. Eso es trabajo de 18–36 meses dentro de GRIDX. El horizonte de salida es 4–7 años — adquisición por pharma/nutraceutical o licenciamiento.</p>
-    </div>
-  </div>
-
-  <!-- 07 PUBLICACIONES -->
-  <div class="sh"><span class="sh-num">08</span><h2 class="sh-title">Publicaciones clave verificadas</h2><div class="sh-rule"></div></div>
-
-  <div class="rf-bar">
-    <button class="rf active" onclick="filterRefs('all',this)">Todas (8)</button>
-    <button class="rf" onclick="filterRefs('salud-femenina',this)">Salud femenina (1)</button>
-    <button class="rf" onclick="filterRefs('cancer',this)">Cáncer (2)</button>
-    <button class="rf" onclick="filterRefs('chagas',this)">Chagas (4)</button>
-    <button class="rf" onclick="filterRefs('antibioticos',this)">Antibióticos (1)</button>
-  </div>
-
-  <div id="ref-list">
-
-    <div class="ref-item" data-cat="salud-femenina">
-      <div class="rcard g">
-        <div class="rcard-top">
-          <span class="rbadge" style="background:#e8f5ee;color:#1a6b4a;">Results in Chemistry · 2024</span>
-          <span class="rcat" style="background:#e8f5ee;color:#1a6b4a;">Salud femenina</span>
-        </div>
-        <div class="rproblem">¿Por qué el 75% no produce S-equol y cómo fabricarlo industrialmente?</div>
-        <div class="rtitle">Advances in Equol Production: Sustainable Strategies for Unlocking Soy Isoflavone Benefits</div>
-        <div class="rauthors"><strong>Ortiz C</strong>, Manta B.</div>
-        <div class="rmeta">
-          <span class="rjournal">Results in Chemistry</span><span class="ryear">2024 · Vol. 7: 101288</span>
-          <a class="rdoi" href="https://doi.org/10.1016/j.rechem.2023.101288" target="_blank">DOI: 10.1016/j.rechem.2023.101288</a>
-        </div>
-        <div class="rnote">Open Access · Ceci primera autora · base científica directa de Equioli</div>
-      </div>
-    </div>
-
-    <div class="ref-item" data-cat="cancer">
-      <div class="rcard o">
-        <div class="rcard-top">
-          <span class="rbadge" style="background:#fdf0eb;color:#c44b1e;">ACS Nano · 2023</span>
-          <span class="rcat" style="background:#fdf0eb;color:#c44b1e;">Cáncer</span>
-        </div>
-        <div class="rproblem">¿Cómo destruir un tumor sin dañar el tejido sano?</div>
-        <div class="rtitle">Remote Activation of Enzyme Nanohybrids for Cancer Prodrug Therapy Controlled by Magnetic Heating</div>
-        <div class="rauthors">Torres-Herrero B, Armenia I, Alleva M, Asín L, Correa S, <strong>Ortiz C</strong>, Betancor L, Grazú V et al.</div>
-        <div class="rmeta">
-          <span class="rjournal">ACS Nano</span><span class="ryear">2023 · 17(13): 12358–12373</span>
-          <a class="rdoi" href="https://doi.org/10.1021/acsnano.3c01599" target="_blank">DOI: 10.1021/acsnano.3c01599</a>
-          <a class="rdoi" href="https://pubmed.ncbi.nlm.nih.gov/37358244/" target="_blank">PubMed: 37358244</a>
-        </div>
-        <div class="rnote">8 años de trabajo · CSIC Zaragoza + ORT Uruguay · validado in vitro</div>
-      </div>
-    </div>
-
-    <div class="ref-item" data-cat="cancer">
-      <div class="rcard o">
-        <div class="rcard-top">
-          <span class="rbadge" style="background:#fdf0eb;color:#c44b1e;">PLoS ONE · 2019</span>
-          <span class="rcat" style="background:#fdf0eb;color:#c44b1e;">Cáncer</span>
-        </div>
-        <div class="rproblem">¿Cómo construir una nanopartícula con enzima + imán que active el tratamiento solo en el tumor?</div>
-        <div class="rtitle">Design of Stable Magnetic Hybrid Nanoparticles of Si-entrapped HRP</div>
-        <div class="rauthors">Correa S, <strong>Ortiz C</strong>, Núñez Villanueva D, Gutiérrez L, de la Fuente JM, Grazú V, Betancor L.</div>
-        <div class="rmeta">
-          <span class="rjournal">PLoS ONE</span><span class="ryear">2019 · 14(4): e0214004</span>
-          <a class="rdoi" href="https://doi.org/10.1371/journal.pone.0214004" target="_blank">DOI: 10.1371/journal.pone.0214004</a>
-          <a class="rdoi" href="https://pubmed.ncbi.nlm.nih.gov/30934011/" target="_blank">PubMed: 30934011</a>
-        </div>
-        <div class="rnote">Primer diseño del nanodispositivo · 280× más estabilidad enzimática</div>
-      </div>
-    </div>
-
-    <div class="ref-item" data-cat="chagas">
-      <div class="rcard n">
-        <div class="rcard-top">
-          <span class="rbadge" style="background:#eaf0fb;color:#2a4a8a;">J. Mol. Biology · 2019</span>
-          <span class="rcat" style="background:#eaf0fb;color:#2a4a8a;">Chagas</span>
-        </div>
-        <div class="rproblem">¿Cuál es la estructura 3D del motor del parásito del Chagas para diseñar fármacos selectivos?</div>
-        <div class="rtitle">Glucose-6-Phosphate Dehydrogenase from Trypanosoma cruzi Evolved Unique Structural Features</div>
-        <div class="rauthors"><strong>Ortíz C</strong>, Botti H, Buschiazzo A, Comini MA.</div>
-        <div class="rmeta">
-          <span class="rjournal">Journal of Molecular Biology</span><span class="ryear">2019 · 431(11): 2143–2162</span>
-          <a class="rdoi" href="https://doi.org/10.1016/j.jmb.2019.03.023" target="_blank">DOI: 10.1016/j.jmb.2019.03.023</a>
-          <a class="rdoi" href="https://pubmed.ncbi.nlm.nih.gov/30930048/" target="_blank">PubMed: 30930048</a>
-        </div>
-        <div class="rnote">Estructura cristalina 3D completa · Institut Pasteur Montevideo</div>
-      </div>
-    </div>
-
-    <div class="ref-item" data-cat="chagas">
-      <div class="rcard n">
-        <div class="rcard-top">
-          <span class="rbadge" style="background:#eaf0fb;color:#2a4a8a;">Molecules · 2021</span>
-          <span class="rcat" style="background:#eaf0fb;color:#2a4a8a;">Chagas</span>
-        </div>
-        <div class="rproblem">¿Los mismos inhibidores del Chagas funcionan contra la enfermedad del sueño (T. brucei)?</div>
-        <div class="rtitle">G6PDH from Trypanosomes: Selectivity for Steroids and Chemical Validation in Trypanosoma brucei</div>
-        <div class="rauthors"><strong>Ortíz C</strong>, Moraca F, Laverriere M, Jordan A, Hamilton N, Comini MA.</div>
-        <div class="rmeta">
-          <span class="rjournal">Molecules</span><span class="ryear">2021 · 26(2): 358</span>
-          <a class="rdoi" href="https://doi.org/10.3390/molecules26020358" target="_blank">DOI: 10.3390/molecules26020358</a>
-          <a class="rdoi" href="https://pubmed.ncbi.nlm.nih.gov/33445584/" target="_blank">PubMed: 33445584</a>
-        </div>
-        <div class="rnote">Validación en T. brucei · colaboración Cancer Research UK Manchester</div>
-      </div>
-    </div>
-
-    <div class="ref-item" data-cat="chagas">
-      <div class="rcard n">
-        <div class="rcard-top">
-          <span class="rbadge" style="background:#eaf0fb;color:#2a4a8a;">Molecules · 2016</span>
-          <span class="rcat" style="background:#eaf0fb;color:#2a4a8a;">Chagas</span>
-        </div>
-        <div class="rproblem">¿Cómo hacer que un inhibidor ataque solo al parásito y no al humano?</div>
-        <div class="rtitle">Binding Mode and Selectivity of Steroids towards G6PDH from Trypanosoma cruzi</div>
-        <div class="rauthors"><strong>Ortiz C</strong>, Moraca F, Medeiros A, Botta M, Hamilton N, Comini MA.</div>
-        <div class="rmeta">
-          <span class="rjournal">Molecules</span><span class="ryear">2016 · 21(3): 368</span>
-          <a class="rdoi" href="https://doi.org/10.3390/molecules21030368" target="_blank">DOI: 10.3390/molecules21030368</a>
-          <a class="rdoi" href="https://pubmed.ncbi.nlm.nih.gov/26999093/" target="_blank">PubMed: 26999093</a>
-        </div>
-        <div class="rnote">17 compuestos con selectividad parásito vs humano</div>
-      </div>
-    </div>
-
-    <div class="ref-item" data-cat="chagas">
-      <div class="rcard" style="border-left-color:#1a7a7a;">
-        <div class="rcard-top">
-          <span class="rbadge" style="background:#e6f5f5;color:#1a7a7a;">Acta Crystallographica · 2011</span>
-          <span class="rcat" style="background:#eaf0fb;color:#2a4a8a;">Chagas</span>
-        </div>
-        <div class="rproblem">¿Cómo es en 3D la enzima del Chagas? Primer mapa para diseñar fármacos.</div>
-        <div class="rtitle">Expression, Crystallization and X-Ray Analysis of G6PDH from Trypanosoma cruzi</div>
-        <div class="rauthors"><strong>Ortíz C</strong>, Larrieux N, Medeiros A, Botti H, Comini M, Buschiazzo A.</div>
-        <div class="rmeta">
-          <span class="rjournal">Acta Crystallographica F</span><span class="ryear">2011 · 67(11): 1457–1461</span>
-          <a class="rdoi" href="https://doi.org/10.1107/S1744309111037821" target="_blank">DOI: 10.1107/S1744309111037821</a>
-          <a class="rdoi" href="https://pubmed.ncbi.nlm.nih.gov/22102256/" target="_blank">PubMed: 22102256</a>
-        </div>
-        <div class="rnote">Primera publicación de Ceci · publicación seminal de tesis doctoral</div>
-      </div>
-    </div>
-
-    <div class="ref-item" data-cat="antibioticos">
-      <div class="rcard" style="border-left-color:#2a4a8a;">
-        <div class="rcard-top">
-          <span class="rbadge" style="background:#eaf0fb;color:#2a4a8a;">Proyecto activo · Royal Society</span>
-          <span class="rcat" style="background:#eaf0fb;color:#2a4a8a;">Antibióticos</span>
-        </div>
-        <div class="rproblem">¿Cómo fabricar antibióticos de último recurso de forma eficiente y escalable?</div>
-        <div class="rtitle">Immobilisation of Polyprenyl-Dependent Glycosyltransferases for Biotechnological and Biomedical Applications</div>
-        <div class="rauthors"><strong>Ortiz C</strong>, Betancor L, Tosin M, Parker R.</div>
-        <div class="rmeta">
-          <span class="rjournal">Proyecto activo</span><span class="ryear">2021–presente · ORT Uruguay + Warwick, UK</span>
-          <a class="rdoi" href="https://fi.ort.edu.uy/novedades/nuevos-compuestos-con-fines-terapeuticos-o-de-diagnostico-111573" target="_blank">Fuente: ORT (2021)</a>
-        </div>
-        <div class="rnote">Financiado por la Royal Society · objetivo: vancomicina y similares por biocatálisis</div>
-      </div>
-    </div>
-
-  </div>
-
-  <div style="margin-top:14px;padding:12px 16px;background:#f0ede8;border-radius:8px;font-size:11px;color:#7a7670;line-height:1.6;">
-    <strong style="color:var(--ink);">Verificación:</strong> DOIs confirmados en PubMed, ACS Publications y PLoS ONE. 23 publicaciones totales en <a href="https://www.researchgate.net/profile/Cecilia-Ortiz-3" target="_blank" style="color:var(--accent);">ResearchGate</a> · 165 citas.
-  </div>
-
-  <!-- 09 PREGUNTAS -->
-  <div class="sh"><span class="sh-num">09</span><h2 class="sh-title">Preguntas para conversar con Ceci y Guillermo</h2><div class="sh-rule"></div></div>
-  <div class="two">
-    <div class="block">
-      <h3>Foco y ciencia</h3>
-      <ol style="padding-left:20px;margin:0;font-size:13px;line-height:1.65;color:var(--ink);">
-        <li style="margin-bottom:14px;"><strong>Foco:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que pueden producir varias moléculas con su tecnología enzimática, y que eligieron S-equol como primera porque tiene 20+ años de evidencia clínica y un mercado que ya existe.</div>¿Por qué S-equol y no otra de las moléculas que podrían hacer? ¿Qué los hizo empezar por ésta?</li>
-        <li style="margin-bottom:14px;"><strong>Ciencia:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que la inmovilización enzimática es lo que los hace distintos, y que parte está publicada y parte son aprendizajes propios del laboratorio.</div>¿Qué parte del proceso es la más distinta de lo publicado? ¿Hay aprendizajes propios — que no estén en papers ni patentes — que sean difíciles de replicar?</li>
-        <li><strong>Plataforma:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que Equioli es más que S-equol — la misma tecnología se podría aplicar a otras moléculas valiosas en el futuro.</div>Después de S-equol, ¿qué 2-3 moléculas vienen después y por qué eligieron esas?</li>
-      </ol>
-    </div>
-    <div class="block">
-      <h3>Motivación y visión</h3>
-      <ol start="4" style="padding-left:20px;margin:0;font-size:13px;line-height:1.65;color:var(--ink);">
-        <li style="margin-bottom:14px;"><strong>Motivación:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que dieron el paso de la academia a fundar una empresa después de años construyendo la base científica juntos en el Institut Pasteur.</div>¿Por qué les interesa fundar una startup biotech ahora? ¿Qué cambió?</li>
-        <li><strong>Visión:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que el camino para llegar a algo grande es de 4 a 7 años, con varias formas posibles de hacerlo realidad.</div>¿Cómo se imaginan a Equioli en 5 años — fabricando S-equol para que otras empresas lo vendan, con producto propio al consumidor, o cediendo la tecnología a un tercero?</li>
-      </ol>
-    </div>
-  </div>
-
-  <!-- 10 EQUIPO Y APRENDIZAJE -->
-  <div class="sh"><span class="sh-num">10</span><h2 class="sh-title">Cómo trabajan, cómo aprenden</h2><div class="sh-rule"></div></div>
-  <div class="two">
-    <div class="block">
-      <h3>Conflictos y momentos difíciles</h3>
-      <ol start="6" style="padding-left:20px;margin:0;font-size:13px;line-height:1.65;color:var(--ink);">
-        <li style="margin-bottom:14px;"><strong>Conflictos:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que después de tantos años trabajando juntos seguramente hubo tensiones técnicas o estratégicas.</div>Cuando tuvieron un desacuerdo importante, ¿cómo lo resolvieron? ¿Un ejemplo concreto?</li>
-        <li><strong>Crisis pasada:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que en investigación los caminos rara vez son lineales.</div>¿Cuál fue un momento difícil del proyecto — científico o de equipo — y qué aprendieron al salir de ahí?</li>
-      </ol>
-    </div>
-    <div class="block">
-      <h3>Hacer equipo</h3>
-      <ol start="8" style="padding-left:20px;margin:0;font-size:13px;line-height:1.65;color:var(--ink);">
-        <li style="margin-bottom:14px;"><strong>Equipo:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que comparten origen científico (Pasteur, tutor Marcelo Comini) pero cada uno trae un perfil distinto al equipo fundador.</div>¿Qué hace cada uno (Ceci / Guillermo) en el día a día y qué cosas saben que les falta cubrir?</li>
-        <li style="margin-bottom:14px;"><strong>Confianza:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que comparten origen profesional, pero el día a día de una empresa pone a prueba otras cosas.</div>¿Qué les hace confiar en el otro cuando hay presión o información incompleta?</li>
-        <li style="margin-bottom:14px;"><strong>Sumar gente:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que en algún momento van a necesitar crecer el equipo.</div>Cuando piensen en sumar a alguien — científico o no — ¿qué buscan más allá del CV?</li>
-        <li><strong>Socio de negocio:</strong><div style="font-style:italic;color:#7a7670;margin:4px 0 6px;">Entiendo que entran a GRIDX para sumar financiamiento y mentoría, pero seguramente buscan algo más específico de un socio de negocio de largo plazo.</div>¿Qué esperan de un socio de negocio — más allá del financiamiento? ¿Qué valores o características los hace decir "va por acá"?</li>
-      </ol>
-    </div>
-  </div>
-
-</div>
-
-<!-- FOOTER -->
-<div class="footer">
-  <span>Dra. <strong>Cecilia Ortiz</strong> · ORT Uruguay · GRIDX Transform 2026</span>
-  <span>Fuentes públicas verificadas · Abril 2026</span>
-</div>
+  <div class="gridx-footer">GRIDX Transform 2026 &nbsp;&nbsp; Equioli &nbsp;&nbsp; Uruguay</div>
+</section>
 
 <script>
-function toggleApp(el) {
-  const open = el.classList.contains('open');
-  document.querySelectorAll('.app').forEach(a => {
-    a.classList.remove('open');
-    const t = a.querySelector('.app-toggle');
-    if(t) t.textContent = '+ ver detalle';
-  });
-  if(!open) {
-    el.classList.add('open');
-    const t = el.querySelector('.app-toggle');
-    if(t) t.textContent = '− cerrar';
+(function() {
+  'use strict';
+
+  // ── PARTICLE CANVAS ──
+  function initParticles(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null };
+    let animId;
+
+    function resize() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+
+    function createParticle() {
+      return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.5 + 0.1
+      };
+    }
+
+    function init() {
+      resize();
+      particles = Array.from({ length: 80 }, createParticle);
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(74,222,128,${p.alpha})`;
+        ctx.fill();
+      });
+
+      // connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(74,222,128,${0.06 * (1 - dist / 100)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      animId = requestAnimationFrame(draw);
+    }
+
+    canvas.parentElement.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+
+    window.addEventListener('resize', init);
+    init();
+    draw();
   }
-}
-function filterRefs(cat, btn) {
-  document.querySelectorAll('.rf').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('#ref-list .ref-item').forEach(item => {
-    item.classList.toggle('hidden', cat !== 'all' && item.dataset.cat !== cat);
+
+  initParticles('canvas-hero');
+  initParticles('canvas-close');
+
+  // ── INTERSECTION OBSERVER ──
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.dot');
+  const progressBar = document.getElementById('progress');
+  const totalSlides = slides.length;
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const idx = Array.from(slides).indexOf(entry.target);
+
+        // progress
+        const pct = ((idx + 1) / totalSlides) * 100;
+        progressBar.style.width = pct + '%';
+
+        // dots
+        dots.forEach(d => d.classList.remove('active'));
+        if (dots[idx]) dots[idx].classList.add('active');
+
+        // fade-ins
+        entry.target.querySelectorAll('.fade-in').forEach(el => {
+          el.classList.add('visible');
+        });
+
+        // animate bars when slide 4 visible
+        if (idx === 3) {
+          setTimeout(() => {
+            document.querySelectorAll('.mbar-fill').forEach(bar => {
+              bar.style.width = bar.dataset.width + '%';
+            });
+          }, 400);
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  slides.forEach(s => observer.observe(s));
+
+  // ── DOT NAVIGATION ──
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.slide);
+      slides[idx].scrollIntoView({ behavior: 'smooth' });
+    });
   });
-}
+
+  // ── KEYBOARD NAVIGATION ──
+  document.addEventListener('keydown', e => {
+    const idx = Array.from(dots).findIndex(d => d.classList.contains('active'));
+    if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+      e.preventDefault();
+      if (idx < totalSlides - 1) slides[idx + 1].scrollIntoView({ behavior: 'smooth' });
+    }
+    if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      if (idx > 0) slides[idx - 1].scrollIntoView({ behavior: 'smooth' });
+    }
+    if (e.key === 'Home') { e.preventDefault(); slides[0].scrollIntoView({ behavior: 'smooth' }); }
+    if (e.key === 'End') { e.preventDefault(); slides[totalSlides - 1].scrollIntoView({ behavior: 'smooth' }); }
+  });
+
+})();
 </script>
 </body>
 </html>
