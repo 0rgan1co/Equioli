@@ -895,6 +895,60 @@ h1.hero-title em {
 .vstat-val { font-family: 'DM Serif Display', serif; font-size: clamp(28px,3.5vw,44px); color: var(--accent); }
 .vstat-lbl { font-size: 12px; color: var(--text3); margin-top: 4px; }
 
+.credibility-strip {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 20px;
+}
+
+.cred-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.cred-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.cred-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  transition: border-color 0.3s;
+}
+
+.cred-card:hover { border-color: rgba(74,222,128,0.3); }
+
+.cred-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+.cred-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cred-text strong {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.cred-text span {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.5;
+}
+
 .gridx-footer {
   position: absolute;
   bottom: 28px;
@@ -1216,18 +1270,30 @@ h1.hero-title em {
       <div class="vision-divider">→</div>
     </div>
 
-    <div class="vision-stats fade-in delay-3">
-      <div class="vstat">
-        <div class="vstat-val">~600M</div>
-        <div class="vstat-lbl">mujeres en menopausia en el mundo</div>
-      </div>
-      <div class="vstat">
-        <div class="vstat-val">75%</div>
-        <div class="vstat-lbl">sin acceso a S-equol hoy</div>
-      </div>
-      <div class="vstat">
-        <div class="vstat-val">1</div>
-        <div class="vstat-lbl">proveedor global &mdash; Equioli quiere ser el segundo</div>
+    <div class="credibility-strip fade-in delay-3">
+      <div class="cred-label">Por qu&eacute; no es humo</div>
+      <div class="cred-cards">
+        <div class="cred-card">
+          <div class="cred-icon">✅</div>
+          <div class="cred-text">
+            <strong>El mercado ya existe</strong>
+            <span>S-equol aprobado en Jap&oacute;n y EE.UU. Otsuka lo vende hace a&ntilde;os. No hay que convencer a nadie de que funciona.</span>
+          </div>
+        </div>
+        <div class="cred-card">
+          <div class="cred-icon">🔬</div>
+          <div class="cred-text">
+            <strong>Las enzimas ya funcionan</strong>
+            <span>M&aacute;s de una d&eacute;cada de investigaci&oacute;n en biocatálisis. Colaboraciones activas con CSIC Zaragoza y University of Warwick.</span>
+          </div>
+        </div>
+        <div class="cred-card">
+          <div class="cred-icon">⚡</div>
+          <div class="cred-text">
+            <strong>La ventana es real</strong>
+            <span>GsynBioT ya est&aacute; atacando el monopolio de Otsuka desde China. Hay espacio para una alternativa occidental antes de que se cierre.</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
