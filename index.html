@@ -771,6 +771,130 @@ h1.hero-title em {
   letter-spacing: 0.05em;
 }
 
+/* ── VISIÓN SLIDE ── */
+#slide-vision {
+  background: var(--bg);
+  text-align: center;
+}
+
+.vision-split {
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  height: clamp(260px, 38vh, 420px);
+  margin: 28px 0 32px;
+  border: 1px solid var(--border);
+}
+
+.vision-half {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  padding: 24px;
+}
+
+.vision-half.before {
+  background: linear-gradient(160deg, #1a0a0a 0%, #2d1515 100%);
+}
+
+.vision-half.after {
+  background: linear-gradient(160deg, #0a1a0f 0%, #0d2d18 100%);
+  border-left: 2px dashed rgba(74,222,128,0.3);
+}
+
+.vision-grid-before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(239,68,68,0.04) 39px, rgba(239,68,68,0.04) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(239,68,68,0.04) 39px, rgba(239,68,68,0.04) 40px);
+}
+
+.vision-grid-after {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(74,222,128,0.05) 39px, rgba(74,222,128,0.05) 40px),
+    repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(74,222,128,0.05) 39px, rgba(74,222,128,0.05) 40px);
+}
+
+.vision-icons-before {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 13px;
+  color: rgba(239,68,68,0.5);
+}
+
+.vision-icons-after {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 13px;
+  color: rgba(74,222,128,0.6);
+}
+
+.big-icon { font-size: 52px; line-height: 1; }
+
+.vision-label {
+  position: relative;
+  z-index: 2;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 100px;
+}
+
+.vision-label.before-label {
+  background: rgba(239,68,68,0.15);
+  color: #fca5a5;
+  border: 1px solid rgba(239,68,68,0.25);
+}
+
+.vision-label.after-label {
+  background: rgba(74,222,128,0.12);
+  color: var(--accent);
+  border: 1px solid rgba(74,222,128,0.25);
+}
+
+.vision-divider {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 10;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+}
+
+.vision-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.vstat { text-align: center; }
+.vstat-val { font-family: 'DM Serif Display', serif; font-size: clamp(28px,3.5vw,44px); color: var(--accent); }
+.vstat-lbl { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
 .gridx-footer {
   position: absolute;
   bottom: 28px;
@@ -803,7 +927,8 @@ h1.hero-title em {
   <div class="dot" data-slide="2" title="Solución"></div>
   <div class="dot" data-slide="3" title="Mercado"></div>
   <div class="dot" data-slide="4" title="Equipo"></div>
-  <div class="dot" data-slide="5" title="Ask"></div>
+  <div class="dot" data-slide="5" title="Visión"></div>
+  <div class="dot" data-slide="6" title="Ask"></div>
 </div>
 
 <!-- ===== SLIDE 1: HERO ===== -->
@@ -1063,7 +1188,53 @@ h1.hero-title em {
   <div class="slide-num">05 / 06</div>
 </section>
 
-<!-- ===== SLIDE 6: CIERRE / ASK ===== -->
+<!-- ===== SLIDE 6: VISIÓN ===== -->
+<section class="slide" id="slide-vision">
+  <div style="position:relative;z-index:2;width:100%;max-width:1100px;text-align:center;">
+    <div class="slide-label fade-in">Visi&oacute;n</div>
+    <div class="big-statement fade-in delay-1" style="font-size:clamp(28px,4vw,54px);">
+      Si Equioli lo logra,<br><em style="color:var(--accent)">el mundo cambia para el 75%.</em>
+    </div>
+
+    <div class="vision-split fade-in delay-2">
+      <div class="vision-half before">
+        <div class="vision-grid-before"></div>
+        <div class="vision-icons-before">
+          <div class="big-icon">😓</div>
+          <div>Sofocos. Hormonas sint&eacute;ticas.<br>Un solo proveedor. Sin alternativa.</div>
+        </div>
+        <div class="vision-label before-label">Hoy</div>
+      </div>
+      <div class="vision-half after">
+        <div class="vision-grid-after"></div>
+        <div class="vision-icons-after">
+          <div class="big-icon">🌿</div>
+          <div>S-equol puro, accesible, occidental.<br>Producido con ciencia uruguaya.</div>
+        </div>
+        <div class="vision-label after-label" style="margin-left:auto;">Con Equioli</div>
+      </div>
+      <div class="vision-divider">→</div>
+    </div>
+
+    <div class="vision-stats fade-in delay-3">
+      <div class="vstat">
+        <div class="vstat-val">~600M</div>
+        <div class="vstat-lbl">mujeres en menopausia en el mundo</div>
+      </div>
+      <div class="vstat">
+        <div class="vstat-val">75%</div>
+        <div class="vstat-lbl">sin acceso a S-equol hoy</div>
+      </div>
+      <div class="vstat">
+        <div class="vstat-val">1</div>
+        <div class="vstat-lbl">proveedor global &mdash; Equioli quiere ser el segundo</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">06 / 07</div>
+</section>
+
+<!-- ===== SLIDE 7: CIERRE / ASK ===== -->
 <section class="slide" id="slide-6">
   <canvas id="canvas-close"></canvas>
   <div class="close-inner">
